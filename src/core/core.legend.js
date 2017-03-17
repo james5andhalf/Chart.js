@@ -260,7 +260,7 @@ module.exports = function(Chart) {
 						var itemWidth = boxWidth + (fontSize / 2) + ctx.measureText(legendItem.text).width;
 
 						// If too tall, go to new column
-						if (currentColHeight + itemHeight > minSize.height) {
+						if (currentColHeight + itemHeight + labelOpts.padding > minSize.height) {
 							totalWidth += currentColWidth + labelOpts.padding;
 							columnWidths.push(currentColWidth); // previous column width
 
