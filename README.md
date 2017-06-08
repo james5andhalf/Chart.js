@@ -1,6 +1,6 @@
 # Chart.js
 
-[![Build Status](https://travis-ci.org/chartjs/Chart.js.svg?branch=master)](https://travis-ci.org/chartjs/Chart.js) [![Code Climate](https://codeclimate.com/github/nnnick/Chart.js/badges/gpa.svg)](https://codeclimate.com/github/nnnick/Chart.js) [![Coverage Status](https://coveralls.io/repos/github/chartjs/Chart.js/badge.svg?branch=master)](https://coveralls.io/github/chartjs/Chart.js?branch=master)
+[![Build Status](https://travis-ci.org/chartjs/Chart.js.svg?branch=master)](https://travis-ci.org/chartjs/Chart.js) [![Code Climate](https://codeclimate.com/github/chartjs/Chart.js/badges/gpa.svg)](https://codeclimate.com/github/chartjs/Chart.js) [![Coverage Status](https://coveralls.io/repos/github/chartjs/Chart.js/badge.svg?branch=master)](https://coveralls.io/github/chartjs/Chart.js?branch=master)
 
 [![Chart.js on Slack](https://img.shields.io/badge/slack-Chart.js-blue.svg)](https://chart-js-automation.herokuapp.com/)
 
@@ -33,21 +33,14 @@ You can find documentation at [www.chartjs.org/docs](http://www.chartjs.org/docs
 
 ## Contributing
 
-Before submitting an issue or a pull request to the project, please take a moment to look over the [contributing guidelines](https://github.com/chartjs/Chart.js/blob/master/CONTRIBUTING.md) first.
+Before submitting an issue or a pull request, please take a moment to look over the [contributing guidelines](https://github.com/chartjs/Chart.js/blob/master/docs/developers/contributing.md) first. For support using Chart.js, please post questions with the [`chartjs` tag on Stack Overflow](http://stackoverflow.com/questions/tagged/chartjs).
 
-For support using Chart.js, please post questions with the [`chartjs` tag on Stack Overflow](http://stackoverflow.com/questions/tagged/chartjs).
+## Building
+Instructions on building and testing Chart.js can be found in [the documentation](https://github.com/chartjs/Chart.js/blob/master/docs/developers/contributing.md#building-and-testing).
 
-## Building and Testing
-
-To build, run `gulp build`.
-
-To test, run `gulp test`.
-
-To test against code standards, run `gulp lint`.
-
-More information on building and testing can be found in [gulpfile.js](gulpfile.js).
-
-Thanks to [BrowserStack](https://browserstack.com) for allowing our team to test on thousands of browsers.
+## Thanks
+- [BrowserStack](https://browserstack.com) for allowing our team to test on thousands of browsers.
+- [@n8agrin](https://twitter.com/n8agrin) for the Twitter handle donation.
 
 ## License
 

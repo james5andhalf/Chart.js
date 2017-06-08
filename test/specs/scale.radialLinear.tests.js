@@ -28,6 +28,8 @@ describe('Test the radial linear scale', function() {
 				display: true,
 				zeroLineColor: 'rgba(0,0,0,0.25)',
 				zeroLineWidth: 1,
+				zeroLineBorderDash: [],
+				zeroLineBorderDashOffset: 0.0,
 				borderDash: [],
 				borderDashOffset: 0.0
 			},
@@ -344,7 +346,7 @@ describe('Test the radial linear scale', function() {
 		});
 
 		expect(chart.scale.drawingArea).toBe(233);
-		expect(chart.scale.xCenter).toBe(247);
+		expect(chart.scale.xCenter).toBe(256);
 		expect(chart.scale.yCenter).toBe(280);
 	});
 
@@ -393,7 +395,7 @@ describe('Test the radial linear scale', function() {
 		expect(chart.scale.getDistanceFromCenterForValue(chart.scale.min)).toBe(0);
 		expect(chart.scale.getDistanceFromCenterForValue(chart.scale.max)).toBe(233);
 		expect(chart.scale.getPointPositionForValue(1, 5)).toEqual({
-			x: 261,
+			x: 270,
 			y: 275,
 		});
 

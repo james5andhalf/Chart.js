@@ -93,9 +93,9 @@ function toBeValidChart() {
 
 			if (!(actual instanceof Chart)) {
 				message = 'Expected ' + actual + ' to be an instance of Chart';
-			} else if (!(actual.canvas instanceof HTMLCanvasElement)) {
+			} else if (Object.prototype.toString.call(actual.canvas) !== '[object HTMLCanvasElement]') {
 				message = 'Expected canvas to be an instance of HTMLCanvasElement';
-			} else if (!(actual.ctx instanceof CanvasRenderingContext2D)) {
+			} else if (Object.prototype.toString.call(actual.ctx) !== '[object CanvasRenderingContext2D]') {
 				message = 'Expected context to be an instance of CanvasRenderingContext2D';
 			} else if (typeof actual.height !== 'number' || !isFinite(actual.height)) {
 				message = 'Expected height to be a strict finite number';
@@ -122,7 +122,7 @@ function toBeChartOfSize() {
 			var message = null;
 			var canvas = actual.ctx.canvas;
 			var style = getComputedStyle(canvas);
-			var pixelRatio = window.devicePixelRatio;
+			var pixelRatio = actual.options.devicePixelRatio || window.devicePixelRatio;
 			var dh = parseInt(style.height, 10);
 			var dw = parseInt(style.width, 10);
 			var rh = canvas.height;

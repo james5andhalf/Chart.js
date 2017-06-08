@@ -34,6 +34,7 @@ module.exports = function(Chart) {
 		footerAlign: 'left',
 		yPadding: 6,
 		xPadding: 6,
+		caretPadding: 2,
 		caretSize: 5,
 		cornerRadius: 6,
 		multiKeyBackground: '#fff',
@@ -85,6 +86,9 @@ module.exports = function(Chart) {
 					borderColor: view.borderColor,
 					backgroundColor: view.backgroundColor
 				};
+			},
+			labelTextColor: function() {
+				return this._options.bodyFontColor;
 			},
 			afterLabel: helpers.noop,
 
@@ -486,6 +490,7 @@ module.exports = function(Chart) {
 				model.opacity = 1;
 
 				var labelColors = [];
+				var labelTextColors = [];
 				tooltipPosition = Chart.Tooltip.positioners[opts.position](active, me._eventPosition);
 
 				var tooltipItems = [];
@@ -510,7 +515,9 @@ module.exports = function(Chart) {
 				// Determine colors for boxes
 				helpers.each(tooltipItems, function(tooltipItem) {
 					labelColors.push(opts.callbacks.labelColor.call(me, tooltipItem, me._chart));
+					labelTextColors.push(opts.callbacks.labelTextColor.call(me, tooltipItem, me._chart));
 				});
+
 
 				// Build the Text Lines
 				model.title = me.getTitle(tooltipItems, data);
@@ -522,8 +529,9 @@ module.exports = function(Chart) {
 				// Initial positioning and colors
 				model.x = Math.round(tooltipPosition.x);
 				model.y = Math.round(tooltipPosition.y);
-				model.caretPadding = helpers.getValueOrDefault(tooltipPosition.padding, 2);
+				model.caretPadding = opts.caretPadding;
 				model.labelColors = labelColors;
+				model.labelTextColors = labelTextColors;
 
 				// data points
 				model.dataPoints = tooltipItems;
@@ -656,9 +664,6 @@ module.exports = function(Chart) {
 
 			ctx.textAlign = vm._bodyAlign;
 			ctx.textBaseline = 'top';
-
-			var textColor = mergeOpacity(vm.bodyFontColor, opacity);
-			ctx.fillStyle = textColor;
 			ctx.font = helpers.fontString(bodyFontSize, vm._bodyFontStyle, vm._bodyFontFamily);
 
 			// Before Body
@@ -686,13 +691,14 @@ module.exports = function(Chart) {
 						ctx.fillRect(pt.x, pt.y, bodyFontSize, bodyFontSize);
 
 						// Border
+						ctx.lineWidth = 1;
 						ctx.strokeStyle = mergeOpacity(vm.labelColors[i].borderColor, opacity);
 						ctx.strokeRect(pt.x, pt.y, bodyFontSize, bodyFontSize);
 
 						// Inner square
 						ctx.fillStyle = mergeOpacity(vm.labelColors[i].backgroundColor, opacity);
 						ctx.fillRect(pt.x + 1, pt.y + 1, bodyFontSize - 2, bodyFontSize - 2);
-
+						var textColor = mergeOpacity(vm.labelTextColors[i], opacity);
 						ctx.fillStyle = textColor;
 					}
 
@@ -789,7 +795,10 @@ module.exports = function(Chart) {
 			// IE11/Edge does not like very small opacities, so snap to 0
 			var opacity = Math.abs(vm.opacity < 1e-3) ? 0 : vm.opacity;
 
-			if (this._options.enabled) {
+			// Truthy/falsey value for empty tooltip
+			var hasTooltipContent = vm.title.length || vm.beforeBody.length || vm.body.length || vm.afterBody.length || vm.footer.length;
+
+			if (this._options.enabled && hasTooltipContent) {
 				// Draw Background
 				this.drawBackground(pt, vm, ctx, tooltipSize, opacity);
 

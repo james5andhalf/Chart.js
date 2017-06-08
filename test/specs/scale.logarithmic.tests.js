@@ -20,6 +20,8 @@ describe('Logarithmic Scale tests', function() {
 				display: true,
 				zeroLineColor: 'rgba(0,0,0,0.25)',
 				zeroLineWidth: 1,
+				zeroLineBorderDash: [],
+				zeroLineBorderDashOffset: 0.0,
 				borderDash: [],
 				borderDashOffset: 0.0
 			},
@@ -726,7 +728,7 @@ describe('Logarithmic Scale tests', function() {
 		expect(yScale.getPixelForValue(80, 0, 0)).toBeCloseToPixel(32);   // top + paddingTop
 		expect(yScale.getPixelForValue(1, 0, 0)).toBeCloseToPixel(484);  // bottom - paddingBottom
 		expect(yScale.getPixelForValue(10, 0, 0)).toBeCloseToPixel(246);  // halfway
-		expect(yScale.getPixelForValue(0, 0, 0)).toBeCloseToPixel(32);   // 0 is invalid. force it on top
+		expect(yScale.getPixelForValue(0, 0, 0)).toBeCloseToPixel(484);   // 0 is invalid. force it on bottom
 
 		expect(yScale.getValueForPixel(32)).toBeCloseTo(80, 1e-4);
 		expect(yScale.getValueForPixel(484)).toBeCloseTo(1, 1e-4);

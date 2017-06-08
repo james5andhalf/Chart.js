@@ -79,6 +79,28 @@ describe('Platform.dom', function() {
 
 			chart.destroy();
 		});
+
+		it('should accept a canvas from an iframe', function(done) {
+			var iframe = document.createElement('iframe');
+			iframe.onload = function() {
+				var doc = iframe.contentDocument;
+				doc.body.innerHTML += '<canvas id="chart"></canvas>';
+				var canvas = doc.getElementById('chart');
+				var chart = new Chart(canvas);
+
+				expect(chart).toBeValidChart();
+				expect(chart.canvas).toBe(canvas);
+				expect(chart.ctx).toBe(canvas.getContext('2d'));
+
+				chart.destroy();
+				canvas.remove();
+				iframe.remove();
+
+				done();
+			};
+
+			document.body.appendChild(iframe);
+		});
 	});
 
 	describe('config.options.aspectRatio', function() {
@@ -100,6 +122,9 @@ describe('Platform.dom', function() {
 		});
 
 		it('should use default "chart" aspect ratio for render and display sizes', function() {
+			var ratio = Chart.defaults.doughnut.aspectRatio;
+			Chart.defaults.doughnut.aspectRatio = 1;
+
 			var chart = acquireChart({
 				type: 'doughnut',
 				options: {
@@ -110,6 +135,8 @@ describe('Platform.dom', function() {
 					style: 'width: 425px'
 				}
 			});
+
+			Chart.defaults.doughnut.aspectRatio = ratio;
 
 			expect(chart).toBeChartOfSize({
 				dw: 425, dh: 425,
@@ -224,6 +251,24 @@ describe('Platform.dom', function() {
 			expect(chart).toBeChartOfSize({
 				dw: 345, dh: 125,
 				rw: 165, rh: 85,
+			});
+		});
+
+		// https://github.com/chartjs/Chart.js/issues/3860
+		it('should support decimal display width and/or height', function() {
+			var chart = acquireChart({
+				options: {
+					responsive: false
+				}
+			}, {
+				canvas: {
+					style: 'width: 345.42px; height: 125.42px;'
+				}
+			});
+
+			expect(chart).toBeChartOfSize({
+				dw: 345, dh: 125,
+				rw: 345, rh: 125,
 			});
 		});
 	});
